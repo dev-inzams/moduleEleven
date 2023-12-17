@@ -39,6 +39,12 @@ const router = useRouter()
                 <a class="btn btn-secondary" @click="newInvoices">
                     New Invoice
                 </a>
+                <a class="btn btn-secondary" href="/invoices/addproduct">
+                    Add Products
+                </a>
+                <a class="btn btn-secondary" href="/invoices/allproduct">
+                    All Products
+                </a>
             </div>
         </div>
 
@@ -89,7 +95,7 @@ const router = useRouter()
                 <a href="#" class="table--items--transactionId">#{{ item.id }}</a>
                 <p>{{ item.date }}</p>
                 <p>#{{ item.number }}</p>
-                <p v-if="item.customers">{{ item.customers.fullName }}</p>
+                <p v-if="item.customerName">{{ item.customerName }}</p>
                 <p v-else>not found</p>
                 <p>{{ item.dueDate }}</p>
                 <p> $ {{ item.total }}</p>

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\counters;
 use App\Models\invoices;
-use App\Models\invoice_items;
 use Illuminate\Http\Request;
+use App\Models\invoice_items;
+use Illuminate\Support\Facades\DB;
 
 class InvoicesController extends Controller
 {
@@ -53,26 +54,47 @@ class InvoicesController extends Controller
 
     public function add_invoice(Request $request){
         $invoiceItem = $request->input("invoice_items");
-        $invoicedata['subtotal'] = $request->input('subtotal');
-        $invoicedata['grandTotal'] = $request->input('grandTotal');
-        $invoicedata['customerName'] = $request->input('customerName');
-        $invoicedata['number'] = $request->input('number');
-        $invoicedata['date'] = $request->input('date');
-        $invoicedata['dueDate'] = $request->input('dueDate');
-        $invoicedata['discount'] = $request->input('discount');
-        $invoicedata['reference'] = $request->input('reference');
-        $invoicedata['tremsAndCondition'] = $request->input('tremsAndCondition');
+        $subTotal = $request->input('subtotal');
+        $total = $request->input('grandTotal');
+        $customerName = $request->input('customerName');
+        $number = $request->input('number');
+        $date = $request->input('date');
+        $dueDate = $request->input('dueDate');
+        $discount = $request->input('discount');
+        $reference = $request->input('reference');
+        $tremsAndCondition = $request->input('tremsAndCondition');
+        $itemCode = $request->input('itemCode');
 
-        $invoice = invoices::create($invoicedata);
+        // $invoice = invoices::create($invoicedata);
 
-        foreach(json_decode($invoiceItem) as $item){
-            $iteamdata['product_id'] = $item->id;
+        $inserted=DB::table('invoices')->insert([
+            'number' => $number,
+            'customerName' => $customerName,
+            'date' => $date,
+            'dueDate' => $dueDate,
+            'reference' => $reference,
+            'tremsAndCondition' => $tremsAndCondition,
+            'subTotal' => $subTotal,
+            'discount' => $discount,
+            'total' => $total,
+            // ... set other columns as needed
+        ]);
 
-            $iteamdata['invoice_id'] = $invoice->id;
-            $iteamdata['qty'] = $item->qty;
-            $iteamdata['prices'] = $item->prices;
-
-            invoice_items::create($iteamdata);
+        if ($inserted) {
+             return redirect()->route('/');
+        } else {
+            // Handle failure, e.g., show an error message
+            return back()->with('error', 'Failed to insert data.');
         }
+
+        // foreach(json_decode($invoiceItem) as $item){
+        //     $iteamdata['product_id'] = $item->id;
+
+        //     $iteamdata['invoice_id'] = $invoice->id;
+        //     $iteamdata['qty'] = $item->qty;
+        //     $iteamdata['prices'] = $item->prices;
+
+        //     invoice_items::create($iteamdata);
+        // }
     }
 }

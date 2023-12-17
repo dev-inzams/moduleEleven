@@ -93,13 +93,16 @@ const onSave = () =>{
         formData.append('reference',form.value.reference)
         formData.append('discount',form.value.discount)
         formData.append('subtotal',subtotal)
-        formData.append('grandTotal',grandTotal)
+        formData.append('grandTotal',total)
         formData.append('tremsAndCondition',form.value.tremsAndCondition)
+
+        // formData.append('itemCode',itemcart.itemCode)
 
         axios.post("/api/add_invoice", formData)
         listcart.value=[]
+        // itemcart.itemCode=[]
 
-        router.push('/')
+        // router.push('/')
     }
 }
 </script>
@@ -122,7 +125,7 @@ const onSave = () =>{
         <div class="card__content">
             <div class="card__content--header">
                 <div>
-                    <p class="my-1">Customer</p>
+                    <p class="my-1">Customer Name</p>
                     <input v-model="form.customerName" type="text" class="input">
                     <!-- <select name="" id="" class="input" >
                         <option value="">cust 1</option>
@@ -155,6 +158,7 @@ const onSave = () =>{
                 <!-- item 1 -->
                 <div class="table--items2" v-for="(itemcart, i) in listcart" :key="itemcart.id">
                     <p>#{{ itemcart.itemCode }} {{ itemcart.productName }}</p>
+                    <input type="hidden" v-model="itemcart.itemCode">
                     <p>
                         <input type="text" class="input" v-model="itemcart.prices">
                     </p>
