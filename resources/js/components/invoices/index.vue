@@ -45,6 +45,9 @@ const router = useRouter()
                 <a class="btn btn-secondary" href="/invoices/allproduct">
                     All Products
                 </a>
+                <a class="btn btn-secondary" href="/invoices/dashboard">
+                    Dashboard
+                </a>
             </div>
         </div>
 

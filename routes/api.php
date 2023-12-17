@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
@@ -31,4 +32,5 @@ Route::post('/add_invoice', [InvoicesController::class, 'add_invoice']);
 
 
 Route::post('/add-product', [ProductsController::class, 'add_product']);
+Route::get('/todaytotalsell', [dashboardController::class, 'todayTotalSell']);
 

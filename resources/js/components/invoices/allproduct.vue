@@ -42,7 +42,7 @@
                         this.products = response.data.products;
                     })
                     .catch(error => {
-                        console.error('Error fetching products', error);
+                        console.error('Error fetching products inzams', error);
                     });
             },
         },
