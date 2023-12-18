@@ -2,22 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-// use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\products;
-class dashboardController extends Controller
-{
-    public function todayTotalSell()
-    {
+use Illuminate\Support\Facades\DB;
+
+class dashboardController extends Controller {
+    public function todayTotalSell() {
         $today = Carbon::now()->toDateString();
 
-        $totalSell = DB::table('products')
-        ->whereDate('created_at', $today)
-        ->sum('total');
-        return response()->json(['totalSell' => $totalSell], 200);
+        $totalSell = DB::table( 'invoices' )
+            ->whereDate( 'created_at', $today )
+            ->sum( 'total' );
+        return response()->json( $totalSell );
     }
 
+    public function thisMonthTotalSell() {
+        $currentMonth = Carbon::now()->month;
+
+        $thisMonthTotalSell = DB::table( 'invoices' )
+            ->whereMonth( 'created_at', $currentMonth )
+            ->sum( 'total' );
+        if ($thisMonthTotalSell < 1) {
+            return response()->json('no sell');
+        }else{
+            return response()->json( $thisMonthTotalSell );
+        }
+
+    }
+
+    public function thisYearTotalSell(){
+        $currentYear = Carbon::now()->year;
+
+        $thisYearSell = DB::table('invoices')
+        ->whereYear('created_at', $currentYear)
+        ->sum('total');
+        return response()->json($thisYearSell);
+    }
 
 }

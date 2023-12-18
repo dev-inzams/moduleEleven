@@ -33,4 +33,6 @@ Route::post('/add_invoice', [InvoicesController::class, 'add_invoice']);
 
 Route::post('/add-product', [ProductsController::class, 'add_product']);
 Route::get('/todaytotalsell', [dashboardController::class, 'todayTotalSell']);
+Route::get('/thisMonthTotalSell', [dashboardController::class, 'thisMonthTotalSell']);
+Route::get('/thisYearTotalSell', [dashboardController::class, 'thisYearTotalSell']);
 
